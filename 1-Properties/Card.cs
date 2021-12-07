@@ -28,18 +28,9 @@ namespace Properties
         {
         }
 
-        public string Seed
-        {
-            get;
-        }
-        private string Name
-        {
-            get;
-        }
-        private int Ordinal
-        {
-            get;
-        }
+        public string Seed{ get; }
+        private string Name { get; }
+        private int Ordinal { get; }
 
         /// <inheritdoc cref="object.ToString"/>
         public override string ToString() => $"{GetType().Name}(Name={Name}, Seed={Seed}, Ordinal={Ordinal})";

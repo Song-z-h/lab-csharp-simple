@@ -1,16 +1,12 @@
+using System;
+
 namespace Properties
 {
-    using System;
-
     /// <summary>
     /// The class models a card.
     /// </summary>
     public class Card
     {
-        private readonly string seed;
-        private readonly string name;
-        private readonly int ordinal;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Card"/> class.
         /// </summary>
@@ -19,9 +15,9 @@ namespace Properties
         /// <param name="ordinal">the ordinal number of the card.</param>
         public Card(string name, string seed, int ordinal)
         {
-            this.name = name;
-            this.ordinal = ordinal;
-            this.seed = seed;
+            Name = name;
+            Ordinal = ordinal;
+            Seed = seed;
         }
 
         /// <summary>
@@ -32,33 +28,38 @@ namespace Properties
         {
         }
 
-        // TODO improve
-        public string GetSeed()
+        public string Seed
         {
-            return this.seed;
+            get;
         }
-
-        // TODO improve
-        public string GetName()
+        private string Name
         {
-            return this.name;
+            get;
         }
-
-        // TODO improve
-        public int GetOrdinal()
+        private int Ordinal
         {
-            return this.ordinal;
+            get;
         }
 
         /// <inheritdoc cref="object.ToString"/>
-        public override string ToString()
+        public override string ToString() => $"{GetType().Name}(Name={Name}, Seed={Seed}, Ordinal={Ordinal})";
+
+        protected bool Equals(Card other)
         {
-            // TODO understand string interpolation
-            return $"{this.GetType().Name}(Name={this.GetName()}, Seed={this.GetSeed()}, Ordinal={this.GetOrdinal()})";
+            return Seed == other.Seed && Name == other.Name && Ordinal == other.Ordinal;
         }
 
-        // TODO generate Equals(object obj)
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Card) obj);
+        }
 
-        // TODO generate GetHashCode()
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Seed, Name, Ordinal);
+        }
     }
 }

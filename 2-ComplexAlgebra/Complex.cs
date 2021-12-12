@@ -29,16 +29,9 @@ namespace ComplexAlgebra
             Imaginary = immaginary;
         }
 
-        public double Modulus
-        {
-            get => Math.Sqrt(Real * Real + Imaginary * Imaginary);
-        }
+        public double Modulus => Math.Sqrt(Real * Real + Imaginary * Imaginary);
 
-        public double Phase
-        {
-            get => Math.Atan2(Imaginary, Real);  
-        }
-        private static bool IsZero(double num) => (Math.Abs(num) < 0.001);
+        public double Phase => Math.Atan2(Imaginary, Real);  
 
         public Complex Complement() => new Complex(Real, Imaginary * -1);
 
@@ -46,13 +39,29 @@ namespace ComplexAlgebra
 
         public Complex Minus(Complex c) => new Complex(Real - c.Real, Imaginary - c.Imaginary);
 
+        /*in order to complete the function ToString, i need to write code for all of 4 cases
+             real immaginary
+              0        0   print real
+              0        1   print sign + immaginary + i
+              1        0   print real
+              1        1   print both
+        The merit of thinking like this would reduce redundant codes. */
         public override string ToString()
         {
-            string sign = Imaginary > 0 ? " + " : " - ";
-            string real = IsZero(Real) ? "" : $"{Real}";
-            string ima = IsZero(Imaginary) ? "" : $"{sign}{Imaginary}i";
-            string zero = real.Equals("") && ima.Equals("") ? "0" : "";
-            return $"{zero}{real}{ima}";
+            // for (0,0)  and (1, 0)
+            if (Imaginary.Equals(0)) return Real.ToString();
+
+            string ima = Math.Abs(Imaginary).Equals(1) ? "" : Imaginary.ToString();
+            string sign;
+            //for (0, 1)
+            if (Real.Equals(0))
+            {
+                 sign = Imaginary > 0 ? "" : "-";
+                return $"{sign} {ima}i";
+            }
+            //for (1, 1)
+            sign = Imaginary > 0 ? "+" : "-";
+            return $"{Real}{sign}{ima}i";
         }
 
         public bool Equals(Complex c) => c.Real.Equals(Real) && c.Imaginary.Equals(Imaginary);

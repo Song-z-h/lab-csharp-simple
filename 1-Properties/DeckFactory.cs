@@ -46,6 +46,7 @@ namespace Properties
                             (n, s) => Tuple.Create(this._names[n], this._seeds[s], n)))
                     .Select(tuple => new Card(tuple))
                     .ToList());
+
             }
         }
     }
